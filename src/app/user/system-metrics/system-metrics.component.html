@@ -1,0 +1,44 @@
+<div class="metrics-container">
+  <mat-card class="metrics-card">
+    <mat-card-title>System Metrics</mat-card-title>
+    <div class="gauges-container">
+      <div class="ngx-gauge-container">
+        <ngx-gauge 
+          [value]="backEndMetrics.cpuUsage" 
+          [type]="'arch'" 
+          [cap]="'round'" 
+          [size]="200" 
+          [thick]="15" 
+          [label]="'CPU Usage'" 
+          [append]="'%'"
+          [foregroundColor]="'#00BCD4'"
+          [backgroundColor]="'#F0F0F0'">
+          <div class="central-label">{{ backEndMetrics.cpuUsage }}%</div>
+        </ngx-gauge>
+      </div>
+      <div class="ngx-gauge-container">
+        <ngx-gauge 
+          [value]="backEndMetrics.ramUsage" 
+          [type]="'arch'" 
+          [cap]="'round'" 
+          [size]="200" 
+          [thick]="15" 
+          [label]="'RAM Usage'" 
+          [append]="'%'"
+          [foregroundColor]="'#3F51B5'"
+          [backgroundColor]="'#F0F0F0'">
+          <div class="central-label">{{ backEndMetrics.ramUsage }}%</div>
+        </ngx-gauge>
+      </div>
+    </div>
+    <div class="metrics-details">
+      <p><strong>CPU Speed:</strong> {{ backEndMetrics.cpuSpeed }} GHz</p>
+      <p><strong>Disk Metrics:</strong></p>
+      <div *ngFor="let disk of diskMetrics" class="disk-details">
+        <p>{{ disk.name }} ({{ disk.fileSystem }}):</p>
+        <mat-progress-bar mode="determinate" [value]="disk.usedPercentage"></mat-progress-bar>
+        <p>{{ disk.freeSpace | number }} GB free of {{ disk.totalSpace | number }} GB</p>
+      </div>
+    </div>
+  </mat-card>
+</div>

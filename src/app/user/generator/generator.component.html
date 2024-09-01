@@ -1,0 +1,222 @@
+<div class="dashboard">
+  <div class="generator-container">
+    <div class="step-container" *ngIf="currentStep === 1">
+      <h2>Project Name</h2>
+      <mat-form-field>
+        <mat-label>Project Name</mat-label>
+        <input matInput [(ngModel)]="projectName" placeholder="Enter project name">
+      </mat-form-field>
+      <p class="note">Note: The project name should not contain spaces. This will be the name of the database.</p>
+      <button mat-raised-button color="primary" (click)="nextStep()">Next</button>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 2">
+      <h2>Choose an Option</h2>
+      <div class="card-options">
+        <div class="option-card" (click)="onFileUploadSelected()">
+          <mat-icon>cloud_upload</mat-icon>
+          <h3>Upload YAML</h3>
+          <p>Generate entities and their relationships from a YAML file.</p>
+        </div>
+        <div class="option-card" (click)="createManually()">
+          <mat-icon>create</mat-icon>
+          <h3>Create Manually</h3>
+          <p>Manually create entities and their relationships.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 3">
+      <h2>DevProGenerator</h2>
+      <div class="container-with-buttons">
+        <mat-card class="button-card">
+          <mat-card-content class="action-button">
+            <button mat-raised-button color="primary" (click)="previousStep()">Previous</button>
+            <button mat-raised-button color="primary" (click)="refreshEntities()">Refresh</button>
+            <button mat-raised-button color="primary" (click)="addNewEntity()">Add New Entity</button>
+            <button mat-raised-button color="primary" (click)="nextStep()">Next</button>
+          </mat-card-content>
+        </mat-card>
+        <div id="entity-container" #entityContainer>
+          <div id="entity-content" #entityContent>
+            <div *ngFor="let entity of editedEntities; let entityIndex = index" [id]="'entity-' + entityIndex"
+              class="entity-box mat-elevation-z1">
+              <h4 class="entity-header">
+                <mat-form-field appearance="outline" class="compact-form-field">
+                  <mat-label>Entity Name</mat-label>
+                  <input matInput [(ngModel)]="entity.name"
+                    (ngModelChange)="onEntityChange(entityIndex, 'name', $event)" />
+                </mat-form-field>
+                <button title="Add New Field" mat-icon-button (click)="addNewField(entityIndex)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button title="Add New Relationship" mat-icon-button (click)="addNewRelationship(entityIndex)">
+                  <mat-icon>link</mat-icon>
+                </button>
+                <button title="Remove Entity" mat-icon-button color="warn" (click)="removeEntity(entityIndex)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </h4>
+              <div *ngIf="entity.fields.length" class="fields-section">
+                <h5 class="section-header">Fields:</h5>
+                <ul>
+                  <li *ngFor="let field of entity.fields; let fieldIndex = index" class="field-item">
+                    <div class="field-inputs">
+                      <mat-form-field appearance="outline" class="compact-form-field large-field">
+                        <mat-label>Field Name</mat-label>
+                        <input matInput [(ngModel)]="field.name"
+                          (ngModelChange)="onFieldChange(entityIndex, fieldIndex, 'name', $event)"
+                          placeholder="Field Name" />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="compact-form-field large-field">
+                        <mat-label>Field Type</mat-label>
+                        <mat-select [(ngModel)]="field.type"
+                          (ngModelChange)="onFieldChange(entityIndex, fieldIndex, 'type', $event)">
+                          <mat-option *ngFor="let type of javaTypes" [value]="type">{{ type }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-checkbox [(ngModel)]="field.required" (change)="onFieldChange(entityIndex, fieldIndex, 'required', $event.checked)">Required</mat-checkbox>
+                    </div>
+                    <button title="Remove Field" mat-icon-button color="warn"
+                      (click)="removeField(entityIndex, fieldIndex)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="entity.relationships.length" class="relationships-section">
+                <h5 class="section-header">Relationships:</h5>
+                <ul>
+                  <li *ngFor="let relationship of entity.relationships; let relIndex = index" class="relationship-item">
+                    <div class="relationship-inputs">
+                      <mat-form-field appearance="outline" class="compact-form-field large-field">
+                        <mat-label>Relationship Name</mat-label>
+                        <input matInput [(ngModel)]="relationship.name"
+                          (ngModelChange)="onRelationshipChange(entityIndex, relIndex, 'name', $event)"
+                          placeholder="Relationship Name" />
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="compact-form-field large-field">
+                        <mat-label>Relationship Type</mat-label>
+                        <mat-select [(ngModel)]="relationship.type"
+                          (ngModelChange)="onRelationshipChange(entityIndex, relIndex, 'type', $event)">
+                          <mat-option value="OneToOne">OneToOne</mat-option>
+                          <mat-option value="OneToMany">OneToMany</mat-option>
+                          <mat-option value="ManyToOne">ManyToOne</mat-option>
+                          <mat-option value="ManyToMany">ManyToMany</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="compact-form-field large-field">
+                        <mat-label>Target Entity</mat-label>
+                        <mat-select [(ngModel)]="relationship.targetEntity"
+                          (ngModelChange)="onRelationshipChange(entityIndex, relIndex, 'targetEntity', $event)">
+                          <mat-option *ngFor="let entityName of getEntityNames()" [value]="entityName">{{ entityName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-checkbox [(ngModel)]="relationship.required" (change)="onRelationshipChange(entityIndex, relIndex, 'required', $event.checked)">Required</mat-checkbox>
+                    </div>
+                    <button title="Remove Relationship" mat-icon-button color="warn"
+                      (click)="removeRelationship(entityIndex, relIndex)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="controls-section">
+                <h5 class="section-header">Access Control:</h5>
+                <mat-form-field appearance="outline" class="compact-form-field large-field">
+                  <mat-label>Role</mat-label>
+                  <mat-select [(ngModel)]="entity.accessControl[0].role"
+                    (selectionChange)="onAccessControlChange(entityIndex, $event.value)">
+                    <mat-option value="ADMIN">ADMIN</mat-option>
+                    <mat-option value="USER">USER</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <h5 class="section-header">Inheritance Control:</h5>
+                <mat-checkbox [(ngModel)]="entity.inheritanceControl[0].inheritance"
+                  (change)="onInheritanceControlChange(entityIndex, $event.checked)">Inherit properties from the User
+                  class</mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 4">
+      <h2>Choose an Option</h2>
+      <div class="card-options">
+        <div class="option-card" (click)="nextStep()">
+          <h3>Imports Existing Data</h3>
+          <p>Generate Project Front-End and Back-End with inserted data into the database from a CSV files.</p>
+        </div>
+        <div class="option-card" (click)="onIgnoreImportData()">
+          <h3>Ignore Importing</h3>
+          <p>Generate Project Front-End and Back-End</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 5">
+      <h2>Import Existing Data</h2>
+      <div *ngFor="let entity of entities">
+        <h3>{{ entity.name }}</h3>
+        <input type="file" (change)="onCsvFileSelected($event, entity)">
+      </div>
+      <button mat-raised-button color="primary" (click)="generateProjectWithCsvData()">Generate Project</button>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 6">
+      <h2>Import Existing Data</h2>
+      <div *ngFor="let entity of entities">
+        <h3>{{ entity.name }}</h3>
+        <input type="file" (change)="onCsvFileSelected($event, entity)">
+        <button mat-raised-button color="primary" (click)="showTables[entity.name] = !showTables[entity.name]">
+          {{ showTables[entity.name] ? 'Hide' : 'Show' }} Data Table
+        </button>
+    
+        <div *ngIf="showTables[entity.name]">
+          <div *ngIf="csvData[entity.name]?.length">
+            <table mat-table [dataSource]="csvData[entity.name]" class="mat-elevation-z1">
+              <ng-container *ngFor="let column of displayedColumns[entity.name]" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-select [ngModel]="columnSelections[entity.name][column]" (ngModelChange)="onColumnSelectionChange($event, entity.name, column)">
+                      <!-- Always include the id as a selectable option -->
+                      <mat-option value="id">id</mat-option>
+                      <mat-option *ngFor="let field of entity.fields" [value]="field.name">{{ field.name }}</mat-option>
+                      <mat-option *ngFor="let rel of entity.relationships" [value]="rel.name">{{ rel.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns[entity.name]"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns[entity.name];"></tr>
+            </table>
+          </div>
+          <button mat-raised-button color="primary" (click)="saveEditedCsv(entity.name)">Save Edited CSV</button>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" (click)="generateProjectWithCsvData()">Generate Project With Insert</button>
+    </div>
+
+    <div class="step-container" *ngIf="currentStep === 7">
+      <h2>Customize Your Project Setup</h2>
+      <div class="card-options">
+        <div class="option-card" (click)="onGenerateWithFrontEnd()">
+          <h3>Generate Complete Project (Front-End & Back-End)</h3>
+          <p>Effortlessly create a fully integrated project by generating both the Front-End, which handles user interactions, and the Back-End, which manages server-side operations. This option provides a comprehensive setup to streamline your development process.</p>
+        </div>
+        <div class="option-card" (click)="onGenerateWithoutFrontEnd()">
+          <h3>Generate Back-End Only</h3>
+          <p>Focus solely on building the Back-End of your project. This option allows you to generate the core server-side functionality without including the Front-End, perfect for cases where the user interface is handled separately or already exists.</p>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+<input type="file" id="file-upload" (change)="onFileSelected($event)" accept=".yaml, .yml" hidden>

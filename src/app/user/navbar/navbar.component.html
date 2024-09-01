@@ -1,0 +1,90 @@
+<mat-toolbar id="navbartop" color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-name">DevProGen</span>
+
+  <span class="spacer"></span>
+
+  <div class="nav-links" *ngIf="!isMobile">
+    <ng-container *ngIf="RID === 'U'; else adminElse">
+      <button mat-button routerLink="/DevProGen/User/Dashboard">Dashboard</button>
+      <button mat-button routerLink="/DevProGen/User/Projects">My Projects</button>
+      <button mat-button routerLink="/DevProGen/User/Projects/Generator">Generator</button>
+    </ng-container>
+
+    <ng-template #adminElse>
+      <ng-container *ngIf="RID === 'A'; else defaultElse">
+        <button mat-button routerLink="/DevProGen/Admin/Dashboard">Dashboard</button>
+        <button mat-button routerLink="/DevProGen/Admin/Projects">My Projects</button>
+        <button mat-button routerLink="/DevProGen/Admin/Projects/Generator">Generator</button>
+        <button mat-button routerLink="/DevProGen/Admin/Users">Users</button>
+        <button mat-button routerLink="/DevProGen/Admin/Logs">Logs</button>
+        <button mat-button routerLink="/DevProGen/Admin/RecycleBin">Recycle Bin</button>
+        <button mat-button routerLink="/DevProGen/Admin/System/Metrics">System Metrics</button>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #defaultElse>
+      <button mat-button routerLink="/DevProGen/Home">Home</button>
+      <button mat-button routerLink="/DevProGen/SignIn">Sign In</button>
+      <button mat-button routerLink="/DevProGen/SignUp">Sign Up</button>
+    </ng-template>
+  </div>
+
+  <div class="profile-menu" *ngIf="userInfo">
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item disabled>
+        <mat-icon>person</mat-icon>
+        <span>{{ userInfo.firstName }} {{ userInfo.lastName }}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="goToSettings()">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" role="navigation" class="limited-sidenav">
+    <mat-nav-list>
+      <ng-container *ngIf="RID === 'U'; else adminListElse">
+        <mat-list-item routerLink="/DevProGen/User/Dashboard">Dashboard</mat-list-item>
+        <mat-list-item routerLink="/DevProGen/User/Projects">My Projects</mat-list-item>
+        <mat-list-item routerLink="/DevProGen/User/Projects/Generator">Generator</mat-list-item>
+      </ng-container>
+  
+      <ng-template #adminListElse>
+        <ng-container *ngIf="RID === 'A'; else defaultListElse">
+          <mat-list-item routerLink="/DevProGen/Admin/Dashboard">Dashboard</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/Projects">My Projects</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/Projects/Generator">Generator</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/Users">Users</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/Logs">Logs</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/RecycleBin">Recycle Bin</mat-list-item>
+          <mat-list-item routerLink="/DevProGen/Admin/System/Metrics">System Metrics</mat-list-item>
+        </ng-container>
+      </ng-template>
+  
+      <ng-template #defaultListElse>
+        <mat-list-item routerLink="/DevProGen/Home">Home</mat-list-item>
+        <mat-list-item routerLink="/DevProGen/SignIn">Sign In</mat-list-item>
+        <mat-list-item routerLink="/DevProGen/SignUp">Sign Up</mat-list-item>
+      </ng-template>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

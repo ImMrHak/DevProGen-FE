@@ -1,0 +1,121 @@
+<div class="dashboard-container">
+    <ng-container *ngIf="!isAdmin">
+        <mat-card class="chart-card">
+            <mat-card-header>
+                <mat-card-title>Project Generation Summary</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="chart-container">
+                    <ngx-charts-pie-chart 
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="projectData"
+                        [legend]="showLegend"
+                        [explodeSlices]="explodeSlices"
+                        [labels]="showLabels"
+                        [doughnut]="doughnut"
+                        (select)="onSelect($event)">
+                    </ngx-charts-pie-chart>
+                </div>
+                <div class="zoom-controls" *ngIf="currentLevel !== 'year'">
+                    <button mat-button (click)="onReset()">Reset Zoom</button>
+                </div>
+                <div class="total-projects">
+                    Total Projects: {{ totalProjects }}
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+    
+    <ng-container *ngIf="isAdmin">
+        <div class="admin-charts">
+            <mat-card class="chart-card">
+                <mat-card-header>
+                    <mat-card-title>User Growth Overview</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-container">
+                        <ngx-charts-bar-vertical 
+                            [view]="view"
+                            [scheme]="colorScheme"
+                            [results]="userGrowthData"
+                            [legend]="showLegend"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [showYAxisLabel]="true"
+                            [yAxisLabel]="'Count'"
+                            [xAxisLabel]="'Account Type'">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+    
+            <mat-card class="chart-card">
+                <mat-card-header>
+                    <mat-card-title>Project Generation Summary</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-container">
+                        <ngx-charts-pie-chart 
+                            [view]="view"
+                            [scheme]="colorScheme"
+                            [results]="projectData"
+                            [legend]="showLegend"
+                            [explodeSlices]="explodeSlices"
+                            [labels]="showLabels"
+                            [doughnut]="doughnut"
+                            (select)="onSelect($event)">
+                        </ngx-charts-pie-chart>
+                    </div>
+                    <div class="zoom-controls" *ngIf="currentLevel !== 'year'">
+                        <button mat-button (click)="onReset()">Reset Zoom</button>
+                    </div>
+                    <div class="total-projects">
+                        Total Projects: {{ totalProjects }}
+                    </div>
+                </mat-card-content>
+            </mat-card>
+    
+            <mat-card class="chart-card">
+                <mat-card-header>
+                    <mat-card-title>Log Severity Distribution</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-container">
+                        <ngx-charts-bar-vertical 
+                            [view]="view"
+                            [scheme]="colorScheme"
+                            [results]="logSeverityData"
+                            [legend]="showLegend"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [showYAxisLabel]="true"
+                            [yAxisLabel]="'Logs'"
+                            [xAxisLabel]="'Severity'">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+    
+            <mat-card class="chart-card">
+                <mat-card-header>
+                    <mat-card-title>My Projects</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="chart-container">
+                        <ngx-charts-pie-chart 
+                            [view]="view"
+                            [scheme]="colorScheme"
+                            [results]="ownProjectsChartData"
+                            [legend]="showLegend"
+                            [explodeSlices]="explodeSlices"
+                            [labels]="showLabels"
+                            [doughnut]="doughnut"
+                            (select)="onSelectProject($event, 'own')">
+                        </ngx-charts-pie-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </ng-container>
+</div>

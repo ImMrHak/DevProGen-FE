@@ -1,0 +1,78 @@
+#navbartop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: #3f51b5; /* Navbar background color */
+  height: 56px;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.app-name {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: white; /* Ensure app name is visible */
+}
+
+.spacer {
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-links button {
+  color: white;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  border-radius: 0px;
+}
+
+.nav-links button:hover {
+  background-color: #303f9f; /* Hover effect */
+}
+
+.profile-menu {
+  display: flex;
+  align-items: center;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 56px); /* Adjusted height */
+}
+
+mat-sidenav {
+  width: 250px;
+  color: white; /* White text color for visibility */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+mat-list-item {
+  font-size: 0.9em;
+  color: black; /* White text color */
+}
+
+button[mat-button] {
+  margin-right: 8px; /* Spacing adjustment */
+}
+
+button[mat-icon-button] {
+  color: white;
+}
+
+mat-menu {
+  background-color: #ffffff;
+}
+
+mat-menu button {
+  color: #000000;
+}
+
+@media (max-width: 600px) {
+  .nav-links {
+    display: none;
+  }
+}

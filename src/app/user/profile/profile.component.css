@@ -1,0 +1,85 @@
+/* General Card Styling */
+.profile-card {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .profile-card:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Header Styling */
+  .profile-card-header {
+    background-color: #1e88e5;
+    color: white;
+    padding: 25px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .header-icon {
+    font-size: 45px;
+  }
+  
+  /* Form Field Styling */
+  .form-group {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 20px;
+  }
+  
+  .form-field {
+    flex: 1;
+  }
+  
+  .full-width-field {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* Form Actions Styling */
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  button {
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  button:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  button[color="warn"] {
+    margin-left: 10px;
+  }
+  
+  mat-divider {
+    margin: 25px 0;
+  }
+  

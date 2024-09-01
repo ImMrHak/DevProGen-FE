@@ -1,0 +1,53 @@
+<mat-card class="profile-card">
+    <mat-card-header class="profile-card-header">
+      <div class="header-content">
+        <mat-icon class="header-icon">account_circle</mat-icon>
+        <mat-card-title>Update Your Profile</mat-card-title>
+      </div>
+    </mat-card-header>
+  
+    <mat-divider></mat-divider>
+  
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-hint align="end">{{ profileForm.controls['firstName'].value?.length || 0 }} / 50</mat-hint>
+            <mat-error *ngIf="profileForm.controls['firstName'].hasError('required')">
+              First name is required
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-hint align="end">{{ profileForm.controls['lastName'].value?.length || 0 }} / 50</mat-hint>
+            <mat-error *ngIf="profileForm.controls['lastName'].hasError('required')">
+              Last name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <mat-form-field appearance="outline" class="full-width-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" required>
+          <mat-error *ngIf="profileForm.controls['email'].hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="profileForm.controls['email'].hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-divider></mat-divider>
+  
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Save Changes</button>
+          <button mat-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

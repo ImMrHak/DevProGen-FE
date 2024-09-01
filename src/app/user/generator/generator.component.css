@@ -1,0 +1,178 @@
+.dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.generator-container {
+  padding: 20px;
+}
+
+.step-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.note {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.card-options {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.option-card {
+  width: 45%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.option-card mat-icon {
+  font-size: 40px;
+  color: #673ab7;
+}
+
+.option-card h3 {
+  margin: 10px 0;
+}
+
+.option-card p {
+  color: #777;
+}
+
+.container-with-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+#entity-container {
+  position: relative;
+  width: calc(100% - 200px); /* Adjust width to leave space for the button card */
+  height: 900px;
+  border: 1px solid #ccc;
+  overflow: auto;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  cursor: grab;
+}
+
+#entity-content {
+  position: relative;
+  width: max-content; /* Adjust to content size */
+  height: max-content; /* Adjust to content size */
+  transform-origin: top left;
+  transition: transform 0.2s ease;
+}
+
+.entity-box {
+  position: absolute;
+  width: 300px;
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+}
+
+.entity-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fields-section, .relationships-section {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.section-header {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.field-item, .relationship-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.field-inputs, .relationship-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.compact-form-field {
+  margin-right: 5px;
+}
+
+.mat-checkbox {
+  margin-top: 10px;
+}
+
+.button-card {
+  height: fit-content;
+  width: 180px;
+  margin-right: 20px;
+}
+
+.action-button{
+  padding-top: 10px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-container button {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .container-with-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #entity-container {
+    width: 100%; /* Adjust to fit container */
+    margin-bottom: 20px;
+  }
+
+  .button-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

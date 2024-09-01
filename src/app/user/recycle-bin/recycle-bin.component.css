@@ -1,0 +1,116 @@
+/* Container padding */
+.recycle-bin-container {
+    padding: 20px;
+  }
+  
+  /* Toolbar styling */
+  mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3f51b5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  /* Container for tables and cards */
+  .table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Card styling */
+  mat-card {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  /* Card header styling */
+  mat-card-header {
+    background-color: #f5f5f5;
+  }
+  
+  /* Search bar styling */
+  mat-form-field.search-bar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .mat-mdc-card-title{
+    padding-bottom: 15px;
+  }
+
+  .search-bar{
+    padding-top: 20px;
+  }
+  
+  /* Input field styling within search bar */
+  .search-bar input {
+    flex: 1;
+  }
+  
+  /* Table styling */
+  mat-table {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  /* Header cell styling */
+  mat-header-cell {
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+    padding: 12px 8px;
+  }
+  
+  /* Cell styling */
+  mat-cell {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  /* Row hover effect */
+  mat-row:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Header row border styling */
+  .mat-header-row {
+    border-bottom: 2px solid #3f51b5;
+  }
+  
+  /* Paginator styling */
+  mat-paginator {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  /* Paginator label styling */
+  .mat-paginator-range-label,
+  .mat-paginator-page-size-label,
+  .mat-paginator-page-size {
+    color: #333;
+  }
+  
+  /* Icon button color */
+  .mat-icon-button {
+    color: #3f51b5;
+  }
+  
+  /* Add this to your component's CSS temporarily to ensure visibility */
+.mat-snack-bar-container {
+  background-color: #4caf50; /* Green background for visibility */
+  color: #fff; /* White text color */
+  font-size: 16px; /* Larger text for visibility */
+  padding: 16px; /* Extra padding */
+  z-index: 1000; /* High z-index */
+}
+  
+  

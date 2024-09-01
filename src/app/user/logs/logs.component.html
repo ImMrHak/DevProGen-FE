@@ -1,0 +1,41 @@
+<div class="logs-container">
+  <mat-toolbar>
+    <span class="title">System Logs</span>
+    <span class="controls">
+      <mat-form-field class="search-bar" appearance="fill">
+        <mat-label>Filter Severity</mat-label>
+        <mat-select [(ngModel)]="severityFilter" (selectionChange)="onSeverityChange($event.value)">
+          <mat-option value="">All</mat-option>
+          <mat-option value="LOW">Low</mat-option>
+          <mat-option value="MID">Mid</mat-option>
+          <mat-option value="HIGH">High</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      
+      <button mat-raised-button color="primary" (click)="exportCSV()"><mat-icon>file_download</mat-icon>Export as CSV</button>
+    </span>
+  </mat-toolbar>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="idLog">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.idLog}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="logMessage">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Message </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.logMessage}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="logSeverity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
+      <mat-cell *matCellDef="let log" [ngClass]="getSeverityColor(log.logSeverity)"> {{log.logSeverity}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
