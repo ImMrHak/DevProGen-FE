@@ -1,0 +1,97 @@
+<div class="home-container">
+  <mat-card class="home-card">
+    <mat-card-header class="home-card-header">
+      <mat-card-title class="home-card-title">Welcome to DevProGenerator</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="intro-text">
+        DevProGenerator is a robust tool designed to streamline the creation of fully functional projects using Spring
+        Boot for the backend and Angular for the frontend. By defining your entities, fields, relationships, and access
+        controls in a simple YAML file, you can quickly generate the skeleton of your application and focus on building
+        features. You can create as many entities as you need to build your application.
+      </p>
+
+      <h2 class="section-title">Documentation</h2>
+      <button mat-raised-button color="primary" (click)="toggleDocumentation()">
+        {{ showDocumentation ? 'Hide' : 'Show' }} Entity Definition YAML
+      </button>
+      <div [@toggleAnimation]="showDocumentation ? 'visible' : 'hidden'">
+        <h3 class="subsection-title">Entity Definition YAML</h3>
+        <pre class="yaml-code">
+  <code>
+  entities:    
+    - name: "EntityName"
+      fields:
+        - name: "fieldName"
+          type: "FieldType"
+          required: true/false
+        # Add more fields as needed
+      relationships:
+        - name: "relationshipName"
+          type: "RelationshipType"
+          targetEntity: "TargetEntityName"
+          required: true/false
+        # Add more relationships as needed
+      accessControl:
+        - role: "ADMIN"
+          allowed: true/false
+      inheritanceControl:
+        - inheritance: true/false
+  # Add more entities as needed
+  </code>
+          </pre>
+      </div>
+
+      <h2 class="section-title">Explanation</h2>
+      <button mat-raised-button color="primary" (click)="toggleExplanation()">
+        {{ showExplanation ? 'Hide' : 'Show' }} Explanation
+      </button>
+      <div [@toggleAnimation]="showExplanation ? 'visible' : 'hidden'">
+        <ul class="explanation-list">
+          <li><strong>name</strong>: The unique identifier for the entity. This will be used as the table name in the
+            database and the primary reference throughout your application.</li>
+          <li><strong>fields</strong>: A list of attributes associated with the entity. Each field entry should include:
+            <ul>
+              <li><strong>name</strong>: The name of the field (e.g., <code>username</code>, <code>email</code>).</li>
+              <li><strong>type</strong>: The data type of the field (e.g., <code>String</code>, <code>Integer</code>).</li>
+              <li><strong>required</strong>: A boolean value indicating whether this field is required. If set to <code>true</code>, the field will be marked as required in the generated HTML form, meaning users must provide a value for this field before submitting the form. If set to <code>false</code>, the field will be optional.</li>
+            </ul>
+          </li>
+          <li><strong>relationships</strong>: Defines how this entity relates to other entities in your application.
+            Each relationship entry should include:
+            <ul>
+              <li><strong>name</strong>: The name of the relationship (e.g., <code>userRoles</code>,
+                <code>orders</code>).</li>
+              <li><strong>type</strong>: The type of relationship (e.g., <code>OneToOne</code>, <code>OneToMany</code>,
+                <code>ManyToOne</code>, <code>ManyToMany</code>).</li>
+              <li><strong>targetEntity</strong>: The entity that this relationship points to (e.g., <code>Role</code>,
+                <code>Order</code>).</li>
+                <li><strong>required</strong>: A boolean value indicating whether this relationship is required. If set to <code>true</code>, the relationship must be defined and cannot be left empty.</li>
+            </ul>
+          </li>
+          <li><strong>accessControl</strong>: Specifies the permissions for different roles to access this entity. Each
+            access control entry should include:
+            <ul>
+              <li><strong>role</strong>: The role for which the access control applies (e.g., <code>ADMIN</code>).</li>
+              <li><strong>allowed</strong>: A boolean value indicating whether the role is allowed to access the entity
+                (e.g., <code>true</code> or <code>false</code>).</li>
+            </ul>
+          </li>
+          <li><strong>inheritanceControl</strong>: Indicates whether this entity inherits properties from an existing
+            User entity. When inheritance is set to true, the entity will inherit all attributes from the User entity,
+            including:
+            <ul>
+              <li><strong>id</strong>: The unique identifier of the user.</li>
+              <li><strong>firstName</strong>: The first name of the user.</li>
+              <li><strong>lastName</strong>: The last name of the user.</li>
+              <li><strong>email</strong>: The email address of the user.</li>
+              <li><strong>userName</strong>: The username of the user.</li>
+              <li><strong>password</strong>: The password of the user.</li>
+              <li><strong>roles</strong>: A collection of roles associated with the user.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

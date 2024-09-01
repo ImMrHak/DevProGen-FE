@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>OAuth2 Redirect</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="token">Token: {{ token }}</p>
+      <p *ngIf="!token">Redirecting...</p>
+      <p *ngIf="rid">RID: {{ rid }}</p>
+    </mat-card-content>
+  </mat-card>
+  

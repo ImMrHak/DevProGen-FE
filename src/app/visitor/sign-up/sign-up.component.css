@@ -1,0 +1,157 @@
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Container Styles */
+.signup-container, .login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.signup-card, .login-card {
+  width: 100%;
+  max-width: 500px; /* Increased max-width for better layout */
+  padding: 30px; /* Increased padding for better spacing */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Slightly more rounded corners */
+  background-color: #fff;
+  animation: fadeIn 1s ease-in-out; /* Add fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+mat-card-header {
+  text-align: center;
+  padding-bottom: 0;
+}
+
+mat-card-title {
+  font-size: 28px;
+  font-weight: 600; /* Slightly bolder font weight */
+  margin-bottom: 10px;
+}
+
+mat-card-subtitle {
+  font-size: 16px;
+  color: #777;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-row mat-form-field {
+  width: 48%; /* Make sure two fields fit in the same row */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-form-field .mat-form-field-label {
+  font-size: 14px;
+  color: #555;
+}
+
+mat-input-element {
+  font-size: 16px;
+  padding: 8px 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.password-strength-meter {
+  margin: 10px 0;
+}
+
+button[mat-raised-button] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 20px; /* Increased margin for better spacing */
+  border-radius: 25px;
+  background-color: #1976d2;
+  color: white;
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+button[mat-raised-button]:hover {
+  background-color: #155a99;
+}
+
+button[mat-stroked-button] {
+  width: 100%;
+  margin-top: 15px; /* Increased margin for better spacing */
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .signup-container, .login-container {
+    padding: 10px;
+  }
+
+  .signup-card, .login-card {
+    margin: 10px;
+  }
+
+  .form-row {
+    flex-direction: column; /* Stack fields vertically on small screens */
+  }
+
+  .form-row mat-form-field {
+    width: 100%; /* Full width for each field */
+  }
+
+  mat-card-title {
+    font-size: 1.8em;
+  }
+
+  mat-card-subtitle {
+    font-size: 1.2em;
+  }
+
+  mat-form-field {
+    margin-bottom: 15px;
+  }
+
+  button[mat-raised-button], button[mat-stroked-button] {
+    font-size: 14px;
+  }
+}

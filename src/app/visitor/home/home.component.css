@@ -1,0 +1,125 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top of the container */
+  padding: 20px; /* Adjust padding to fit correctly within the container */
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 64px); /* Adjust height to account for the navbar */
+}
+
+.home-card {
+  width: 100%;
+  max-width: 900px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 3px 3px 10px #cccccc, -3px -3px 10px #ffffff;
+  border-radius: 10px; /* Slightly more rounded corners */
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 12px;
+  animation: fadeIn 1s ease-in-out; /* Add fade-in animation */
+  margin: 20px;
+}
+
+
+.home-card-header {
+  text-align: center;
+  background-color: #3f51b5;
+  color: white;
+  padding: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.home-card-title {
+  font-size: 2.2em;
+  font-weight: bold;
+}
+
+.intro-text {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 1.8em;
+  margin-top: 30px;
+  color: #333;
+  border-bottom: 2px solid #3f51b5;
+  padding-bottom: 5px;
+}
+
+.subsection-title {
+  font-size: 1.4em;
+  margin-top: 20px;
+  color: #555;
+}
+
+.yaml-code {
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.explanation-list {
+  font-size: 1.1em;
+  color: #444;
+  margin-left: 20px;
+}
+
+.explanation-list li {
+  margin-bottom: 10px;
+}
+
+.explanation-list ul {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.explanation-list ul li {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .home-container {
+    padding: 10px;
+  }
+
+  .home-card {
+    margin: 10px;
+  }
+
+  .home-card-title {
+    font-size: 1.8em;
+  }
+
+  .intro-text {
+    font-size: 1em;
+  }
+
+  .section-title {
+    font-size: 1.5em;
+  }
+
+  .subsection-title {
+    font-size: 1.2em;
+  }
+
+  .yaml-code {
+    font-size: 0.9em;
+  }
+
+  .explanation-list {
+    font-size: 1em;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="login-container">
+  <div class="background-overlay"></div>
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Welcome To DevProGenerator</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username or Email</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button type="button" matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="form-options">
+          <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
+          <button mat-button color="primary" class="signup-button" (click)="navigateToSignUp()">Sign Up</button>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid" class="full-width">Login</button>
+      </form>
+
+      <div class="oauth-buttons">
+        <button mat-raised-button color="warn" (click)="loginWithOAuth('google')" class="oauth-button google">
+          <mat-icon>login</mat-icon> Login with Google
+        </button>
+        <button mat-raised-button color="primary" (click)="loginWithOAuth('facebook')" class="oauth-button facebook">
+          <mat-icon>facebook</mat-icon> Login with Facebook
+        </button>
+        <button mat-raised-button color="accent" (click)="loginWithOAuth('github')" class="oauth-button github">
+          <mat-icon>code</mat-icon> Login with GitHub
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
