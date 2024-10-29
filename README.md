@@ -1,27 +1,62 @@
-# DevProGen
+# Angular Frontend for DevProGen
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
+This is the frontend application for the DevProGen project built using Angular. It provides a user-friendly interface for managing projects, user profiles, and system metrics.
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The Angular frontend is designed to interact seamlessly with the backend services. It allows users to perform various actions, including:
 
-## Code scaffolding
+- **User Management**: Registering, signing in, and managing user profiles.
+- **Project Management**: Generating, updating, and deleting projects.
+- **Dashboard**: Providing an overview of user activity and project status.
+- **System Metrics**: Displaying system performance metrics.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Project Structure
 
-## Build
+The project contains the following main components:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Services**: Contains services for handling API interactions and business logic.
+- **User Module**: Manages user-related functionalities such as:
+  - Dashboard
+  - Project generator
+  - Logs and activity history
+  - Profile management
+  - Project listings
+  - System metrics
+- **Visitor Module**: Handles components accessible to visitors, including:
+  - Home page
+  - Sign-in and sign-up pages
+  - OAuth2 redirect handling
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To install and run this project, follow these steps:
 
-## Running end-to-end tests
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <project-directory>
+   ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Install the required dependencies:
+   ```bash
+   npm install
+   ```
 
-## Further help
+## Usage
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+To start the application, run the following command:
+
+```bash
+ng serve
+```
+
+You can access the application at 'http://localhost:4200'.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
