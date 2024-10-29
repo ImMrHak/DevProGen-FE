@@ -24,57 +24,33 @@ export class UserService {
   }
 
   getCountTotalProjects(): Observable<number> {
-    return this.http.get<number>(`${this.baseUrl}/countProjects`, { headers: this.getAuthHeaders() });
+    return this.http.get<number>(`${this.baseUrl}/countMyProjects`, { headers: this.getAuthHeaders() });
   }
 
-  getListProjects(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/listProjects`, { headers: this.getAuthHeaders() });
-  }
+  getListProjects(): Observable<{ data: any }> {
+    return this.http.get<{ data: any }>(`${this.baseUrl}/listMyProjects`, { headers: this.getAuthHeaders() });
+}
 
-  generateProject(file: File, projectName: string): Observable<Blob> {
+
+  generateProject(file: File, projectName: string, isBEOnly: boolean): Observable<Blob> {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('projectName', projectName);
-    return this.http.post(`${this.baseUrl}/generateProject`, formData, {
-      headers: this.getAuthHeaders(),
-      responseType: 'blob'
-    });
-  }
+    formData.append('isBEOnly', isBEOnly.toString());
 
-  generateProjectWithoutFrontEnd(file: File, projectName: string): Observable<Blob> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    formData.append('projectName', projectName);
-    return this.http.post(`${this.baseUrl}/genereateProjectWithoutFE`, formData, {
-      headers: this.getAuthHeaders(),
-      responseType: 'blob'
-    });
-  }
-
-  generateProjectWithInserts(file: File, projectName: string, csvFiles: File[]): Observable<Blob> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    formData.append('projectName', projectName);
-
-    if (csvFiles.length === 1) {
-        formData.append('csvDataFile', csvFiles[0]);
-    }
-
-    return this.http.post(`${this.baseUrl}/generateProjectWithInserts`, formData, {
-        headers: this.getAuthHeaders(),
+    // Ensure no Content-Type header is set explicitly here
+    return this.http.post(`${this.baseUrl}/generateMyProject`, formData, {
+        headers: this.getAuthHeaders(), // Ensure this method does not set 'Content-Type'
         responseType: 'blob'
     });
 }
-
-  
-  
 
   updateProjectName(project: { idProject: number, name: string }): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/updateProjectName`, project, { headers: this.getAuthHeaders() });
   }
   
   downloadProject(projectId: number): Observable<HttpEvent<any>> {
-    return this.http.get(`${this.baseUrl}/downloadExistingProject`, {
+    return this.http.get(`${this.baseUrl}/downloadMyExistingProject`, {
       headers: this.getAuthHeaders(),
       params: { projectId: projectId.toString() },
       responseType: 'blob' as 'json',
@@ -105,8 +81,8 @@ export class UserService {
         );
 }
 
-updateUserProfile(user: { firstName: string; lastName: string; email: string;}): Observable<any> {
-  return this.http.put(`${this.baseUrl}/updateMe`, user, { headers: this.getAuthHeaders() })
+updateUserProfile(userUpdateProfileDTO: { firstName: string; lastName: string; email: string;}): Observable<any> {
+  return this.http.put(`${this.baseUrl}/updateMyProfile`, userUpdateProfileDTO, { headers: this.getAuthHeaders() })
     .pipe(
       catchError(this.handleError)
     );

@@ -26,8 +26,8 @@ export class UsersComponent {
   constructor(private adminService: AdminService, public dialog: MatDialog,  private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.adminService.getListUsers().subscribe(users => {
-      this.dataSource = new MatTableDataSource(users);
+    this.adminService.getListUsers().subscribe((users: any) => {
+      this.dataSource = new MatTableDataSource(users.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });

@@ -169,12 +169,12 @@ export class GeneratorComponent implements OnInit, AfterViewInit, OnDestroy, Aft
       const file = new File([blob], `${this.projectName}.yaml`, { type: 'text/yaml' });
     
       if (sessionStorage.getItem('rid') === 'A') {
-        this.adminService.generateProject(file, this.projectName).subscribe(
+        this.adminService.generateProject(file, this.projectName, false).subscribe(
           response => this.handleFileDownload(response, `${this.projectName}.zip`),
           error => console.error('Error generating project:', error)
         );
       } else if (sessionStorage.getItem('rid') === 'U') {
-        this.userService.generateProject(file, this.projectName).subscribe(
+        this.userService.generateProject(file, this.projectName, false).subscribe(
           response => this.handleFileDownload(response, `${this.projectName}.zip`),
           error => console.error('Error generating project:', error)
         );
@@ -187,12 +187,12 @@ export class GeneratorComponent implements OnInit, AfterViewInit, OnDestroy, Aft
       const file = new File([blob], `${this.projectName}.yaml`, { type: 'text/yaml' });
     
       if (sessionStorage.getItem('rid') === 'A') {
-        this.adminService.generateProjectWithoutFrontEnd(file, this.projectName).subscribe(
+        this.adminService.generateProject(file, this.projectName, true).subscribe(
           response => this.handleFileDownload(response, `${this.projectName}.zip`),
           error => console.error('Error generating project:', error)
         );
       } else if (sessionStorage.getItem('rid') === 'U') {
-        this.userService.generateProjectWithoutFrontEnd(file, this.projectName).subscribe(
+        this.userService.generateProject(file, this.projectName, true).subscribe(
           response => this.handleFileDownload(response, `${this.projectName}.zip`),
           error => console.error('Error generating project:', error)
         );
@@ -244,51 +244,7 @@ export class GeneratorComponent implements OnInit, AfterViewInit, OnDestroy, Aft
       }
     });
   }
-  
-  
-  
-  generateProjectWithCsvData() {
-    const formData = new FormData();
-    const editedYaml = yaml.dump({ entities: this.editedEntities, projectName: this.projectName });
-  
-    // Create a File from the YAML Blob
-    const yamlFile = new File([editedYaml], `${this.projectName}.yaml`, { type: 'text/yaml' });
-    formData.append('file', yamlFile);
-  
-    let combinedCsvContent = '';
-  
-    // Create a list of Promises to handle the asynchronous file reading
-    const csvPromises = this.csvFiles.map(({ file }) => {
-      return new Promise<void>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          combinedCsvContent += e.target.result + '\n'; // Add a newline to separate different CSV files
-          resolve();
-        };
-        reader.onerror = reject;
-        reader.readAsText(file);
-      });
-    });
-  
-    // When all CSV files have been read and combined
-    Promise.all(csvPromises).then(() => {
-      // Create a File from the combined CSV Blob
-      const combinedCsvFile = new File([combinedCsvContent], `${this.projectName}_combined.csv`, { type: 'text/csv' });
-  
-      // Send the combined CSV file along with the YAML file to the backend
-      if (sessionStorage.getItem('rid') === 'A') {
-        this.adminService.generateProjectWithInserts(yamlFile, this.projectName, [combinedCsvFile]).subscribe(
-          response => this.handleFileDownload(response, `${this.projectName}.zip`),
-          error => console.error('Error generating project:', error)
-        );
-      } else if (sessionStorage.getItem('rid') === 'U') {
-        this.userService.generateProjectWithInserts(yamlFile, this.projectName, [combinedCsvFile]).subscribe(
-          response => this.handleFileDownload(response, `${this.projectName}.zip`),
-          error => console.error('Error generating project:', error)
-        );
-      }
-    }).catch(error => console.error('Error reading CSV files:', error));
-  }
+
   
   
 
@@ -585,12 +541,12 @@ onRelationshipChange(entityIndex: number, relIndex: number, key: keyof Relations
     const file = new File([blob], `${this.projectName}.yaml`, { type: 'text/yaml' });
   
     if (sessionStorage.getItem('rid') === 'A') {
-      this.adminService.generateProject(file, this.projectName).subscribe(
+      this.adminService.generateProject(file, this.projectName, false).subscribe(
         response => this.handleFileDownload(response, `${this.projectName}.zip`),
         error => this.snackBar.open('Error generating project', "Close")
       );
     } else if (sessionStorage.getItem('rid') === 'U') {
-      this.userService.generateProject(file, this.projectName).subscribe(
+      this.userService.generateProject(file, this.projectName, false).subscribe(
         response => this.handleFileDownload(response, `${this.projectName}.zip`),
         error => this.snackBar.open('Error generating project', "Close")
       );

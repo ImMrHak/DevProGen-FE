@@ -80,32 +80,33 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchTotalProjects(): void {
-    this.userService.getCountTotalProjects().subscribe(data => {
-      this.totalProjects = data;
+    this.userService.getCountTotalProjects().subscribe((data: any) => {
+      this.totalProjects = data.data;
     });
   }
 
   fetchProjectData(): void {
     this.userService.getListProjects().subscribe(projects => {
-      this.processProjectData(projects);
+      this.processProjectData(projects.data);
     });
   }
 
   fetchTotalProjectsAdmin(): void {
     this.adminService.getCountTotalProjects().subscribe(data => {
-      this.totalProjects = data;
+      this.totalProjects = data.data;
     });
   }
 
   fetchProjectDataAdmin(): void {
-    this.adminService.getListProjects().subscribe(projects => {
-      this.processProjectData(projects);
+    this.adminService.getListProjects().subscribe((projects: any) => {
+      this.processProjectData(projects.data);
     });
   }
 
   fetchOwnProjectsAdmin(): void {
-    this.adminService.getListOwnProjects().subscribe(projects => {
-      this.ownProjectsChartData = projects.map(p => ({ name: p.name, value: 1 }));
+    this.adminService.getListOwnProjects().subscribe((projects: any) => {
+      //this.ownProjectsChartData = projects.data.map(p => ({ name: p.name, value: 1 }));//-
+      this.ownProjectsChartData = projects.data.map((p: { name: string }) => ({ name: p.name, value: 1 }));//+"conversationId":"be1c916b-b3e9-4e73-8030-a339505f23f6","source":"instruct"}
     });
   }
 
@@ -172,8 +173,8 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchUserGrowthData(): void {
-    this.adminService.getListUsers().subscribe((users: User[]) => {
-      const accountTypeCounts = users.reduce((acc: any, user: User) => {
+    this.adminService.getListUsers().subscribe((users: any) => {
+      const accountTypeCounts = users.data.reduce((acc: any, user: User) => {
         acc[user.accountType] = (acc[user.accountType] || 0) + 1;
         return acc;
       }, {});
@@ -186,8 +187,8 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchLogSeverityData(): void {
-    this.adminService.getListLogs().subscribe(logs => {
-      const logSeverityCount = logs.reduce((acc: any, log: any) => {
+    this.adminService.getListLogs().subscribe((logs: any) => {
+      const logSeverityCount = logs.data.reduce((acc: any, log: any) => {
         acc[log.logSeverity] = (acc[log.logSeverity] || 0) + 1;
         return acc;
       }, {});

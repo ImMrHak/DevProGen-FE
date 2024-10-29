@@ -13,11 +13,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signIn(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.regularAuthUrl}/signin`, { "usernamemail": username, "password": password });
+    return this.http.post<any>(`${this.regularAuthUrl}/SignIn`, { "usernameOrEmail": username, "password": password });
   }
 
   signUp(user: any): Observable<any> {
-    return this.http.post(`${this.regularAuthUrl}/signup`, user);
+    return this.http.post(`${this.regularAuthUrl}/SignUp`, user);
   }
 
   loginWithOAuth(provider: string): void {

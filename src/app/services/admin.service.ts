@@ -7,7 +7,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 })
 export class AdminService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/admin';
+  private baseUrl = 'http://localhost:8080/api/v1/user';
 
   constructor(private http: HttpClient) { }
 
@@ -39,11 +39,11 @@ export class AdminService {
   }
 
   getCountTotalProjects(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/countProjects`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${this.baseUrl}/countMyProjects`, { headers: this.getAuthHeaders() });
   }
 
   getListProjects(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/listProjects`, { headers: this.getAuthHeaders() });
+    return this.http.get<any[]>(`${this.baseUrl}/listMyProjects`, { headers: this.getAuthHeaders() });
   }
 
   getCountOwnProjects(): Observable<number> {
@@ -51,54 +51,33 @@ export class AdminService {
   }
 
   getListOwnProjects(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/listOwnProjects`, { headers: this.getAuthHeaders() });
+    return this.http.get<any[]>(`${this.baseUrl}/listMyProjects`, { headers: this.getAuthHeaders() });
   }
 
-  getListAllProjects(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/listAllProjects`, { headers: this.getAuthHeaders() });
+  getListAllProjects(): Observable<{ data:any }> {
+     return this.http.get<{ data: any }>(`${this.baseUrl}/listMyProjects`, { headers: this.getAuthHeaders() });
   }
 
-  generateProject(file: File, projectName: string): Observable<Blob> {
+  generateProject(file: File, projectName: string, isBEOnly: boolean): Observable<Blob> {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('projectName', projectName);
-    return this.http.post(`${this.baseUrl}/generateProject`, formData, {
-      headers: this.getAuthHeaders(),
-      responseType: 'blob'
-    });
-  }
+    formData.append('isBEOnly', isBEOnly.toString());
 
-  generateProjectWithoutFrontEnd(file: File, projectName: string): Observable<Blob> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    formData.append('projectName', projectName);
-    return this.http.post(`${this.baseUrl}/genereateProjectWithoutFE`, formData, {
-      headers: this.getAuthHeaders(),
-      responseType: 'blob'
-    });
-  }
-
-  generateProjectWithInserts(file: File, projectName: string, csvFiles: File[]): Observable<Blob> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    formData.append('projectName', projectName);
-
-    if (csvFiles.length === 1) {
-        formData.append('csvDataFile', csvFiles[0]);
-    }
-
-    return this.http.post(`${this.baseUrl}/generateProjectWithInserts`, formData, {
-        headers: this.getAuthHeaders(),
+    // Ensure no Content-Type header is set explicitly here
+    return this.http.post(`${this.baseUrl}/generateMyProject`, formData, {
+        headers: this.getAuthHeaders(), // Ensure this method does not set 'Content-Type'
         responseType: 'blob'
     });
 }
 
+
   updateProjectName(project: { idProject: number, name: string }): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/updateProjectName`, project, { headers: this.getAuthHeaders() });
+    return this.http.put<any>(`${this.baseUrl}/updateMyProjectName`, project, { headers: this.getAuthHeaders() });
   }
 
   downloadProject(projectId: number): Observable<HttpEvent<any>> {
-    return this.http.get(`${this.baseUrl}/downloadExistingProject`, {
+    return this.http.get(`${this.baseUrl}/downloadMyExistingProject`, {
       headers: this.getAuthHeaders(),
       params: { projectId: projectId.toString() },
       responseType: 'blob' as 'json',
@@ -120,7 +99,7 @@ export class AdminService {
 
   deleteProject(id: number): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('token')}`);
-    return this.http.delete<any>(`${this.baseUrl}/deleteProject?projectId=${id}`, { headers, responseType: 'text' as 'json' })
+    return this.http.delete<any>(`${this.baseUrl}/deleteMyProject?projectId=${id}`, { headers, responseType: 'text' as 'json' })
         .pipe(
             catchError((error: HttpErrorResponse) => {
                 console.error('Error occurred:', error);
@@ -141,15 +120,12 @@ resetUserPassword(id: number): Observable<any> {
 }
 
 sendEmailToUser(email: string, message: string): Observable<any> {
-  const formData: FormData = new FormData();
-    formData.append('email', email);
-    formData.append('message', message);
-
-    return this.http.post(`${this.baseUrl}/sendEmail`, formData, {
+    return this.http.post(`${this.baseUrl}/sendEmailToUser`, { 'email': email, 'message': message }, {
         headers: this.getAuthHeaders(),
         responseType: 'text' as 'json'
     });
 }
+
 
 deleteUser(id: number): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${sessionStorage.getItem('token')}`);
@@ -164,11 +140,11 @@ deleteUser(id: number): Observable<any> {
 
 getSystemMetrics(): Observable<any> {
   return this.http.get<any>(`${this.baseUrl}/systemMetrics`, { headers: this.getAuthHeaders() }).pipe(
-    map(data => ({
-      cpuUsage: Number(data.cpuUsage),
-      cpuSpeed: Number(data.cpuSpeed),
-      ramUsage: Number(data.ramUsage),
-      diskMetrics: data.diskMetrics.map((disk: any) => ({
+    map((data: any) => ({
+      cpuUsage: Number(data.data.cpuUsage),
+      cpuSpeed: Number(data.data.cpuSpeed),
+      ramUsage: Number(data.data.ramUsage),
+      diskMetrics: data.data.diskMetrics.map((disk: any) => ({
         name: disk.name,
         totalSpace: Number(disk.totalSpace),
         freeSpace: Number(disk.freeSpace),
@@ -222,8 +198,8 @@ getDeletedProjects(): Observable<any[]> {
     );
 }
 
-updateAdminProfile(user: { firstName: string; lastName: string; email: string;}): Observable<any> {
-  return this.http.put(`${this.baseUrl}/updateMe`, user, { headers: this.getAuthHeaders() })
+updateAdminProfile(userUpdateProfileDTO: { firstName: string; lastName: string; email: string;}): Observable<any> {
+  return this.http.put(`${this.baseUrl}/updateMyProfile`, userUpdateProfileDTO, { headers: this.getAuthHeaders() })
     .pipe(
       catchError(this.handleError)
     );

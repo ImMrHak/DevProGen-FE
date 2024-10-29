@@ -38,14 +38,14 @@ export class RecycleBinComponent implements OnInit, AfterViewInit {
   }
 
   loadDeletedUsers(): void {
-    this.adminService.getDeletedUsers().subscribe(users => {
-      this.dataSourceUsers.data = users;
+    this.adminService.getDeletedUsers().subscribe((users: any) => {
+      this.dataSourceUsers.data = users.data;
     });
   }
 
   loadDeletedProjects(): void {
-    this.adminService.getDeletedProjects().subscribe(projects => {
-      this.dataSourceProjects.data = projects;
+    this.adminService.getDeletedProjects().subscribe((projects: any) => {
+      this.dataSourceProjects.data = projects.data;
     });
   }
 

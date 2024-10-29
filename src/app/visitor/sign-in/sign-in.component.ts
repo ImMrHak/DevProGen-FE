@@ -41,8 +41,8 @@ export class SignInComponent implements OnInit {
             this.removeLocalStorage('password');
           }
 
-          this.setSessionStorage('token', response.token);
-          this.setSessionStorage('rid', response.rid);
+          this.setSessionStorage('token', response.data.token);
+          this.setSessionStorage('rid', response.data.rid);
 
          // Show success message
           this.snackBar.open('Login successful!', 'Close', {
@@ -51,9 +51,9 @@ export class SignInComponent implements OnInit {
 
           // Navigate after a short delay
           setTimeout(() => {
-            if (response.rid === 'A') {
+            if (response.data.rid === 'A') {
               this.router.navigate(['/DevProGen/Admin/Dashboard']);
-            } else if (response.rid === 'U') {
+            } else if (response.data.rid === 'U') {
               this.router.navigate(['/DevProGen/User/Dashboard']);
             }
           }, 2000); // Delay should match the snack bar duration

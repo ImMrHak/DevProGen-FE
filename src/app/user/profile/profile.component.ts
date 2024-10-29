@@ -33,17 +33,17 @@ export class ProfileComponent implements OnInit {
     if (sessionStorage.getItem('rid') === 'A') {
       this.adminService.getUserInfo().subscribe(user => {
         this.profileForm.patchValue({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
+          firstName: user.data.firstName,
+          lastName: user.data.lastName,
+          email: user.data.email,
         });
       });
     } else {
       this.userService.getUserInfo().subscribe(user => {
         this.profileForm.patchValue({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
+          firstName: user.data.firstName,
+          lastName: user.data.lastName,
+          email: user.data.email,
         });
       });
     }

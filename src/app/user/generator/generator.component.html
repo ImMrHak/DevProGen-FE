@@ -146,7 +146,7 @@
     <div class="step-container" *ngIf="currentStep === 4">
       <h2>Choose an Option</h2>
       <div class="card-options">
-        <div class="option-card" (click)="nextStep()">
+        <div class="option-card" (click)="null">
           <h3>Imports Existing Data</h3>
           <p>Generate Project Front-End and Back-End with inserted data into the database from a CSV files.</p>
         </div>
@@ -156,14 +156,13 @@
         </div>
       </div>
     </div>
-
     <div class="step-container" *ngIf="currentStep === 5">
       <h2>Import Existing Data</h2>
       <div *ngFor="let entity of entities">
         <h3>{{ entity.name }}</h3>
         <input type="file" (change)="onCsvFileSelected($event, entity)">
       </div>
-      <button mat-raised-button color="primary" (click)="generateProjectWithCsvData()">Generate Project</button>
+      <button mat-raised-button color="primary" (click)="null">Generate Project</button>
     </div>
 
     <div class="step-container" *ngIf="currentStep === 6">
@@ -198,7 +197,7 @@
           <button mat-raised-button color="primary" (click)="saveEditedCsv(entity.name)">Save Edited CSV</button>
         </div>
       </div>
-      <button mat-raised-button color="primary" (click)="generateProjectWithCsvData()">Generate Project With Insert</button>
+      <button mat-raised-button color="primary" (click)="null">Generate Project With Insert</button>
     </div>
 
     <div class="step-container" *ngIf="currentStep === 7">

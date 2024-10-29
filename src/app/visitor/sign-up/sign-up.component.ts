@@ -43,8 +43,8 @@ export class SignUpComponent implements OnInit {
       const { firstname, lastname, email, username, password } = this.signUpForm.value;
       this.loading = true;
 
-      this.authService.signUp({ firstname, lastname, email, username, password }).subscribe(
-        response => {
+      this.authService.signUp({ "firstName":firstname, "lastName":lastname, "Email":email, "userName":username, "password":password }).subscribe(
+        response => { 
           localStorage.setItem('usernamemail', username);
           localStorage.setItem('password', password);
           console.log('Sign up successful', response);
@@ -52,6 +52,8 @@ export class SignUpComponent implements OnInit {
           this.snackBar.open(response.message, 'Close', {
             duration: 3000,
           });
+          console.log(response.data.token);
+          response.data.rid;
           this.router.navigate(['/DevProGen/SignIn']);
         },
         error => {

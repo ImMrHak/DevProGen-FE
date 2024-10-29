@@ -80,22 +80,22 @@ export class ProjectsComponent implements OnInit {
   }
 
   loadAdminAllProjects(): void {
-    this.adminService.getListAllProjects().subscribe((projects: Project[]) => {
-      this.projects = projects;
-      this.filteredProjects = projects;
-      this.paginateProjects();
-      this.populateYears();
+    this.adminService.getListAllProjects().subscribe((response: { data: Project[] }) => {
+        this.projects = response.data; // Extracting projects from response.data
+        this.filteredProjects = response.data;
+        this.paginateProjects();
+        this.populateYears();
     });
-  }
+}
 
-  loadUserProjects(): void {
-    this.userService.getListProjects().subscribe((projects: Project[]) => {
-      this.projects = projects;
-      this.filteredProjects = projects;
+loadUserProjects(): void {
+  this.userService.getListProjects().subscribe((response: { data: Project[] }) => {
+      this.projects = response.data; // Extracting projects from response.data
+      this.filteredProjects = response.data;
       this.paginateProjects();
       this.populateYears();
-    });
-  }
+  });
+}
 
   filterProjectsByName(event: Event): void {
     const target = event.target as HTMLInputElement;

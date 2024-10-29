@@ -36,8 +36,8 @@ export class LogsComponent implements OnInit {
   }
 
   fetchLogs(): void {
-    this.adminService.getListLogs().subscribe((logs: Log[]) => {
-      this.dataSource = new MatTableDataSource(logs);
+    this.adminService.getListLogs().subscribe((logs: any) => {
+      this.dataSource = new MatTableDataSource(logs.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.applyFilter();
